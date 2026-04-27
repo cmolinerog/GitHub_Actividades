@@ -1,0 +1,59 @@
+Scenario 1: Core Banking Transaction System
+
+- Recommended storage type: RDBMS
+- Data structure requirements: highly structured customers, transactions, accounts
+- Query patterns: reports,  audits
+- Consistency needs: very high, no duplicates
+- Scalability requirements : can scale vertically 
+- Trade-offs considered: Good SQL analytics
+
+
+
+
+------------------------------------------------------------------------------
+
+Scenario 2:  E-commerce Product Catalog
+
+- Recommended storage type: Hybrid -> RDBMS + NoSQL
+- Data structure requirements: orders and payments are structure but product catalog is flexible
+- Query patterns: catalog research, transactions, carts
+- Consistency needs:  ACID for orders
+- Scalability requirements: need high traffic scaling
+- Trade-offs considered: flexible schema
+
+
+
+------------------------------------------------------------------------------
+
+Scenario 3: Telecom Call Detail Records (CDR)
+
+- Recommended storage type: Wide-column NoSQL
+- Data structure requirements: masive append-only records
+- Query patterns: Time-range analytics
+- Consistency needs: strong
+- Scalability requirements: very high write throughput needed
+- Trade-offs considered: limited joins
+
+
+-------------------------------------------------------------------------------
+
+Scenario 4: : Social Network Relationship Graph
+
+- Recommended storage type: Graph database
+- Data structure requirements: nodes for users
+- Query patterns:mutual connections, recommendations
+- Consistency needs: moderate
+- Scalability requirements: large user graph
+- Trade-offs considered: best for connected data
+
+
+-----------------------------------------------------------------------------
+
+Scenario 5: IoT Sensor Data Ingestion
+
+- Recommended storage type: Wide column
+- Data structure requirements append only sensor events
+- Query patterns:hisotrical analysis
+- Consistency needs slight delays acceptable
+- Scalability requirements: millions of readings per hour
+- Trade-offs considered: Good write scaling
