@@ -1,0 +1,10 @@
+Lab M8.04 – Lake vs Warehouse Classification (Problem Lab)
+
+
+Dataset				Storage Type		Zone		Schema Strategy		Ingestión Type		Reasoning
+Application logs		Data Lake		Bronze		read			streaming		high volume and unstructured JSON files
+Daily sales summary		Data Warehouse		-		write			batch			structure reporting data with fixed schema
+Raw IoT sensor data		Data Lake		Bronze		read			streaming		real time monitoring, variable strucutre
+Customer master data		Data Lake		Silver		write			batch			structure data with fixed schema
+Marketing campaign results	Data Warehouse		-		write			batch			periodic updates and structured data
+Ad-hoc analyst extracts		Data Warehouse		-		read			batch			irregular structure
