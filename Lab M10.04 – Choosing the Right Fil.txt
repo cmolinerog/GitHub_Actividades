@@ -1,0 +1,113 @@
+Lab M10.04 – Choosing the Right File Format (Application Lab)
+
+
+
+Scenario		Selected Format		Primary Justification	Read Pattern	Write Pattern	Schema		Performance	Interoperability	Trade-offs		
+Streaming Clickstream	JSON			Schema flexibility	Exploratory	High-volume	Evolving	High		High			Large file size, slow reads
+Daily Sales Analytics	Parquet			Reduce compute cost	Columnar	Daily		Stable		high		Low			Write-intensive, complex
+Data Exchange		CSV			Need interportability	Row		Low volumen	Stable		Basic		High			Large size
+Ad-Hoc Exploration	JSON			Human readability	Low volumen	Low		Flexible	Moderate	High			Inefficient for large scans
+Long-Term Archive	ORC			High compressed data	Append-only	Low		Stable		High		Low			Requires specialized tools
+
+
+Scenario 1: Streaming Clickstream Ingestión
+
+Selected Format: JSON
+
+Justification
+	Write pattern: High-velocity streaming, JSON supports fast append writes
+	Schema evolution: Flexible ideal for evolving event structures.
+	Human-readable: Easy for debugging raw events.
+Trade-offs: Poor compression and slower analytical queries
+Alternatives: Parquet
+
+
+--------------------------------------------------------------------
+
+Scenario 2: Daily Sales Analytics
+
+Selected Format: Parquet
+
+Justification
+	Read pattern: Analytical queries, reads only necessary columns
+	Performance: Excellent for aggregations and filtering
+	Storage: Highly compressed
+
+Trade-offs: Slower writes than CSV/JSON and not human-readable
+
+Alternatives: ORC, similar performance
+
+
+-------------------------------------------------------------------
+
+
+Scenario 3: Data Exchange with External Partners
+
+Selected Format: CSV
+
+Justification
+
+	Interoperability: Universally supported (Excel, databases, scripts).
+	Human-readable: Simple and transparent.
+	Ease of use: No specialized tools required.
+Trade-offs: No schema enforcement and larger storage size
+
+Alternatives: JSON if complex data is required
+
+------------------------------------------------------------------------
+
+
+Scenario 4: Ad-Hoc Analyst Exploration
+
+Selected Format: JSON
+
+Justification
+	Schema flexibility: Supports unknown/evolving schema.
+	Human-readable: Easy debugging and iteration.
+
+Trade-offs:Slower than columnar formats
+
+Alternatives: 
+
+
+----------------------------------------------------------------------------
+
+
+Scenario 5: Long-Term Archival Storage
+
+Selected Format: ORC
+
+Justification
+	offers excellent compression
+	ORC optimized for analytics
+
+Trade-offs: Not human-readable
+Alternatives: Parquet
+
+
+
+Format Selection Decision Tree:
+
+1. What is the primary access pattern?
+   - Analytical queries → Consider: Parquet, ORC
+   - Transactional/Full row → Consider: CSV, JSON
+   - Exploratory → Consider: CSV, JSON
+
+2. What is the write pattern?
+   - Streaming → Consider: JSON, CSV
+   - Batch → Consider: Parquet, ORC
+   - Append-only → Consider: Parquet, ORC
+
+3. Is schema evolution needed?
+   - Yes → Consider: JSON, Parquet
+   - No → Consider: CSV, Parquet, ORC
+
+4. What are interoperability requirements?
+   - Universal → Consider: CSV, JSON
+   - Specialized tools OK → Consider: Parquet, ORC
+
+5. What is the primary concern?
+   - Storage cost → Consider: Parquet, ORC
+   - Query performance → Consider: Parquet, ORC
+   - Human readability → Consider: CSV, JSON
+   - Universal compatibility → Consider: CSV, JSON
