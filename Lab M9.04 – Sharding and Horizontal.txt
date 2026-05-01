@@ -1,0 +1,149 @@
+Lab M9.04 – Sharding and Horizontal Partitioning Strategy
+
+
+What is horizontal vs vertical partitioning?
+Horizontal partioning: splits the data into small sections (sharding)
+Vertical partioning: you have bigger sections
+
+Define horizontal partitioning (sharding)
+splits the database in smaller, independent pieces called shards.
+
+Define vertical partitioning
+you have bigger servers
+
+Explain when each is appropriate and compare their scalability characteristics
+
+Vertical: temporary solution but has physical limits and gets expensive
+Horizontal: When data grows too much. Easier tot scale
+
+
+
+What is the difference between sharding and indexing?
+Indexing helps for searching and sharding for storage. 
+
+
+How does sharding differ from indexing?
+Same
+
+
+When is indexing sufficient?
+
+when you need to look for information in a large dataset.
+
+When is sharding necessary?
+When you have a big volumen of data
+
+Can you use both together?
+Yes
+
+
+What are the key considerations for sharding?
+
+Data distribution: horizontal
+Query routing. 
+Scalability: easier than vertical
+Complexity: there are more moving parts to manage
+Consistency: Good
+
+
+------------------------------------------------------------------------------------------
+Step 2: Shard Key Selection
+
+- Dataset 1: User Accounts
+
+What shard key would you choose? user_id
+
+Why does it distribute data evenly? Because each row has a unique user_id
+
+What query patterns does it support? hashing
+
+What are the trade-offs? Cannot do range query
+
+
+
+- Dataset 2: Transaction Records
+
+What shard key would you choose? user_id
+
+Why does it distribute data evenly? high cardinality
+
+What query patterns does it support? hashing
+
+What are the trade-offs? 
+
+
+
+- Dataset 3: IoT Sensor Data
+
+What shard key would you choose? device_id, timestamp (composite)
+
+Why does it distribute data evenly? high cardinality
+
+What query patterns does it support? hashing and range
+
+What are the trade-offs? more complex
+
+
+
+- Dataset 4: Orders by Region
+
+What shard key would you choose? region
+
+Why does it distribute data evenly? región alone is not very evenly, maybe add another key
+
+What query patterns does it support? range
+
+What are the trade-offs? 
+
+
+-----------------------------------------------------------------------------------
+
+Step 3: Risk Analysis
+
+Dataset		Hot Shards Risk	Rebalancing Risk	Query Routing Risk	Data Skew Risk		Mitigation Strategies
+User Accounts	Low		Low			Low			Low			Consistent hashing
+Transactions	Low		Low			Low			Low			
+IoT Sensor Data	High (new data)	High			Medium			High			Composite key with timestamp
+Orders by Región High		High			Medium			High			Composite key
+
+
+------------------------------------------------------------------------------------
+
+Step 4:  Final Design Summary
+
+User Accounts
+
+Shard key: user_id
+Strategy: Hash-based sharding
+Primary benefit: Even data distributin
+Main risk:
+Mitigation:
+
+
+Transactions
+
+Shard key: user_id
+Strategy: Hash-based sharding
+Primary benefit: Keeps all transactions of a user on the same shard
+Main risk: Hot users causing hot shards
+Mitigation: composite key
+
+IoT Sensor Data
+
+Shard key: device_id
+
+Strategy: Hash-based sharding
+Primary benefit: Scales high-volume
+Main risk: Hot shards due to recent data or high-frequency devices
+Mitigation: composite key with tomestamp
+
+
+Orders by Region
+
+Shard key: region 
+Strategy: Hash-based sharding
+Primary benefit: Balances regional locality
+Main risk: large regions créate data screw
+Mitigation: composite key 
+
+
