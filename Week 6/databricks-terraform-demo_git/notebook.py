@@ -1,0 +1,1 @@
+print("Terraform + Databricks working!")
