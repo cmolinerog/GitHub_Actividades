@@ -1,0 +1,115 @@
+Lab 1: Multiple Consumers Demo
+#create topic in producer
+C:\kafka_2.13-3.9.1>bin\windows\kafka-topics.bat --create --topic group-demo --bootstrap-server localhost:9092 --partitions 3 --replication-factor 1
+
+#start producer
+C:\kafka_2.13-3.9.1>bin\windows\kafka-console-producer.bat --topic group-topic --bootstrap-server localhost:9092
+
+#start consumer 1. In new terminal(símbolo del sistema)
+C:\kafka_2.13-3.9.1>bin\windows\kafka-console-consumer.bat --topic group-topic --from-beginning --bootstrap-server localhost:9092
+
+#start consumer 2. In new terminal(símbolo del sistema)
+C:\kafka_2.13-3.9.1>bin\windows\kafka-console-consumer.bat --topic group-topic --from-beginning --bootstrap-server localhost:9092
+
+ ===================================================================================================
+###Lab 2: Partition Demo
+#Create topic with 3 partitions
+C:\kafka_2.13-3.9.1>bin\windows\kafka-topics.bat --create --topic lab2-demo --bootstrap-server localhost:9092 --partitions 3 --replication-factor 1
+
+Created topic lab2-demo.
+
+#Describe topic and observe partition information.s
+C:\kafka_2.13-3.9.1>bin\windows\kafka-topics.bat --describe --topic lab2-demo --bootstrap-server localhost:9092
+
+Topic: lab2-demo        TopicId: T6ezltsQS0yPZnYTtK13SQ PartitionCount: 3       ReplicationFactor: 1    Configs:
+        Topic: lab2-demo        Partition: 0    Leader: 0       Replicas: 0     Isr: 0  Elr: N/A        LastKnownElr: N/A
+        Topic: lab2-demo        Partition: 1    Leader: 0       Replicas: 0     Isr: 0  Elr: N/A        LastKnownElr: N/A
+        Topic: lab2-demo        Partition: 2    Leader: 0       Replicas: 0     Isr: 0  Elr: N/A        LastKnownElr: N/A
+
+ ===================================================================================================
+
+###Lab 3: Real-Time Chat Demo
+#Run producer
+C:\kafka_2.13-3.9.1>bin\windows\kafka-console-producer.bat --topic demo-topic --bootstrap-server localhost:9092
+>hello
+>are
+>you
+>my
+>mama
+
+#Run consumer
+C:\kafka_2.13-3.9.1>bin\windows\kafka-console-consumer.bat --topic demo-topic --from-beginning --bootstrap-server localhost:9092
+hello
+are
+you
+my
+mama
+
+
+ ===================================================================================================
+
+###Lab 4: Producer with Keys Demo
+#producer
+C:\kafka_2.13-3.9.1>bin\windows\kafka-console-producer.bat --topic demo-topic --bootstrap-server localhost:9092 --property "parse.key=true" --property "key.separator=:"
+>user1:hola
+user1:como estas
+user2:buenos días
+
+#consumer
+como estas
+buenos días
+
+ ===================================================================================================
+
+###Lab 5: Consumer Group Monitoring
+#List consumer groups.
+C:\kafka_2.13-3.9.1>bin\windows\kafka-consumer-groups.bat --bootstrap-server localhost:9092 --list
+console-consumer-41647
+
+#Describe a consumer group.
+C:\kafka_2.13-3.9.1>bin\windows\kafka-consumer-groups.bat --bootstrap-server localhost:9092 --describe --group console-consumer-41647
+
+GROUP                  TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID                                           HOST            CLIENT-ID
+console-consumer-41647 demo-topic      0          -               17              -               console-consumer-3f0ba6a3-b36e-4459-8064-f9c36bb57122 /192.168.1.138  console-consumer
+
+ ===================================================================================================
+###Lab 6: Retention Demo
+C:\kafka_2.13-3.9.1>bin\windows\kafka-console-consumer.bat --topic demo-topic --bootstrap-server localhost:9092 --from-beginning
+hello
+are
+you
+my
+mama
+bin\windows\kafka-topics.bat --delete --topic demo-topic --bootstrap-server localhost:9092
+
+
+
+
+
+hola
+como estas
+buenos dias
+adios
+test
+bye
+
+
+ ===================================================================================================
+###Lab 7: Offset Demo
+beginning: shows all the historical messages of the topic
+Latest: show only new messages
+
+C:\kafka_2.13-3.9.1>bin\windows\kafka-console-consumer.bat --topic demo-topic --bootstrap-server localhost:9092
+a
+c
+v
+
+
+ ===================================================================================================
+
+###Lab 8: Topic Metadata Demo
+
+C:\kafka_2.13-3.9.1>bin\windows\kafka-topics.bat --topic demo-topic --bootstrap-server localhost:9092 --describe
+Topic: demo-topic       TopicId: 0u8-HZ1hQfeIyr5ecNSa5g PartitionCount: 1       ReplicationFactor: 1    Configs:
+        Topic: demo-topic       Partition: 0    Leader: 0       Replicas: 0     Isr: 0  Elr: N/A        LastKnownElr: N/A
+
