@@ -1,0 +1,79 @@
+┌─────────────────────────┐
+│  Python Producer        │
+│  (producer.py)          │
+│                         │
+│ Generates 10,000 orders │
+└───────────┬─────────────┘
+            │
+            ▼
+┌─────────────────────────┐
+│ Kafka Topic             │
+│ orders_topic            │
+│                         │
+│ Stores order events     │
+└───────────┬─────────────┘
+            │
+            ▼
+┌─────────────────────────┐
+│ Airflow DAG             │
+│ (Hourly Schedule)       │
+│                         │
+│ Orchestrates pipeline   │
+└───────────┬─────────────┘
+            │
+            ▼
+┌─────────────────────────┐
+│ Python Consumer         │
+│ (consumer.py)           │
+│                         │
+│ Reads Kafka messages    │
+│ Writes CSV / JSON       │
+└───────────┬─────────────┘
+            │
+            ▼
+┌─────────────────────────┐
+│ Landing Zone            │
+│ data/raw/orders.csv     │
+│                         │
+│ Raw order data          │
+└───────────┬─────────────┘
+            │
+            ▼
+┌─────────────────────────┐
+│ PySpark                 │
+│ transform_orders.py     │
+│                         │
+│ • Remove nulls          │
+│ • Cast data types       │
+│────────────────────────
+            │
+            ▼
+┌─────────────────────────┐
+│ Snowflake               │
+│ STG_ORDERS              │
+│                         │
+│ Data Warehouse Storage  │
+└───────────┬─────────────┘
+            │
+            ▼
+┌─────────────────────────┐
+│ dbt                     │
+│                         │
+│ stg_orders              │
+│      ↓                  │
+│ fct_orders              │
+│      ↓                  │
+│ rpt_revenue_by_region   │
+│ rpt_hourly_gmv
+    top_products          │
+└───────────┬─────────────┘
+            │
+            ▼
+┌─────────────────────────┐
+│ Power Bi Dashboard      │
+│                         │
+│ • Daily GMV Trend       │
+│ • Revenue by Region     │
+│ • Top Products          │
+│    │
+└─────────────────────────┘
