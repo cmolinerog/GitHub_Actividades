@@ -1,0 +1,46 @@
+[ SOURCE & SIMULATION LAYER ]
+  ┌────────────────────────────────────────────────────────┐
+  │                 Python Event Simulator                 │
+  │  (Generates POST_CREATED, LIKE, COMMENT, VIDEO_VIEW...)│
+  └───────────────────────────┬────────────────────────────┘
+                              │
+                              ▼ (High Velocity: >1,000 ev/min)
+  [ INGESTION LAYER ]
+  ┌────────────────────────────────────────────────────────┐
+  │                     Apache Kafka                       │
+  │         (Highly concurrent messaging queues)           │
+  └───────────────────────────┬────────────────────────────┘
+                              │
+                              ▼ (Continuous Stream Consumption)
+  [ REAL-TIME PROCESSING LAYER ]
+  ┌────────────────────────────────────────────────────────┐
+  │                  PySpark Streaming                     │
+  │   (Parses JSON, validates data quality & cleanses)     │
+  └───────────────────────────┬────────────────────────────┘
+                              │
+                              ▼ (Micro-batch writes)
+  [ DATA WAREHOUSE LAYER: SNOWFLAKE CORE ]
+  ┌────────────────────────────────────────────────────────┐
+  │                     Snowflake RAW                      │
+  │          (SOCIAL_MEDIA_DB: RAW_EVENTS)                 │
+  └───────────────────────────┬────────────────────────────┘
+                              │
+                              ▼ (Transformation & Enrichment)
+  ┌────────────────────────────────────────────────────────┐
+  │                   Snowflake CURATED                    │
+  │      (Unifies raw events with USER_DIM and POST_DIM)   │
+  └───────────────────────────┬────────────────────────────┘
+                              │
+                              ▼ (Aggregations & Time-Windows)
+  [ ANALYTICS & BUSINESS MART LAYER ]
+  ┌────────────────────────────────────────────────────────┐
+  │                  Snowflake ANALYTICS                   │
+  │  (TRENDING_HASHTAGS, VIRAL_POSTS, INFLUENCER_RANKING)   │
+  └───────────────────────────┬────────────────────────────┘
+                              │
+                              ▼ (Direct analytical queries)
+  [ VISUALIZATION LAYER ]
+  ┌────────────────────────────────────────────────────────┐
+  │                 Power BI / Looker                      │
+  │    (Critical business KPIs & real-time alerts)         │
+  └────────────────────────────────────────────────────────┘

@@ -1,0 +1,11 @@
+{
+  "event_id": "e4f8d91a-cc2b-4bf1-aa82-df08871ab11e",
+  "event_type": "COMMENT",
+  "actor_user_id": "USR_0073",
+  "target_user_id": null,
+  "target_post_id": "PST_00105",
+  "target_author_id": "USR_0003",
+  "comment_text": "This setup is clean! Highly accurate results.",
+  "hashtags": ["#pyspark"],
+  "timestamp": "2026-06-16T10:41:05.789Z"
+}

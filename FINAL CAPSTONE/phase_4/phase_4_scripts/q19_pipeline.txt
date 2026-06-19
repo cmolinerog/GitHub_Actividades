@@ -1,0 +1,17 @@
+[ Producer.py ] (Delayed IoT Data)
+       │
+       ▼ (JSON Stream)
+  [ KAFKA ] (Topic: iot_data)
+       │
+       ▼ (Read Stream)
+[ SPARK STREAMING ] ────► [ Apply 10-min Watermark ]
+       │                  [ Group into 5-min Windows ]
+       │                  [ Output Mode: Update ]
+       ▼ (foreachBatch Append)
+ [ SNOWFLAKE ] ─────────► [ Table: SENSOR_AGGREGATES_RAW ] (History with duplicates)
+       │
+       ├──► [ View: V_CORRECTIONS_HISTORY ] (Delta Auditing)
+       └──► [ View: V_LATEST_SENSOR_AGGREGATES ] (Latest Clean Data [rn=1])
+                 │
+                 ▼ (DirectQuery / Import)
+           [ POWER BI ] (Real-Time Dashboards)
