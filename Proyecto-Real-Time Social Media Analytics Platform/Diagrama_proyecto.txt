@@ -1,0 +1,20 @@
+[ Simulador Python ] 
+       │ (>1,000 ev/min + Viral Spikes)
+       ▼
+[ Apache Kafka ] ──► Topic: social_media_events
+       │ (Micro-batches de 5s
+       ▼
+[ PySpark Streaming ] ──► Limpieza, validación y parsing de JSON
+       │
+       ▼
+[ Snowflake RAW ] ──► Capa Bronce (RAW_EVENTS)
+       │
+       ▼ (Dynamic Tables)
+[ Snowflake CURATED ] ──► Capa Plata (Enriquecimiento con USER_DIM y POST_DIM)
+       │
+       ▼ (Dynamic Tables)
+[ Snowflake ANALYTICS ] ──► Capa Oro (Trending Hashtags, Viral Posts, Influencer Ranking)
+       │
+       ▼
+[ Dashboard Power BI ] ──► Visualización interactiva de KPIs de negocio
+ 
